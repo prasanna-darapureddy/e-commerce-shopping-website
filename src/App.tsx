@@ -1,26 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Products from "./components/products/Products";
+import NavBar from "./components/navBar/NavBar";
+import CartProducts from "./components/cartProducts/CartProducts";
+import WishList from "./components/wishList/WishList";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Products />} />
+        <Route path="/cart" element={<CartProducts />} />
+        <Route path="/wishlist" element={<WishList />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
 export default App;
