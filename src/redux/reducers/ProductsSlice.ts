@@ -126,11 +126,11 @@ export const ProductsSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded'
-        state.productsList = action.payload
+        state.productsList = action?.payload
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed'
-        action.error.message !== undefined && (state.error = action.error.message)
+        action.error.message !== undefined && (state.error = "Oops! something went wrong" ?? action.error.message)
       })
   }
 })

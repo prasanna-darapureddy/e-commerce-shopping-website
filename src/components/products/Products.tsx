@@ -2,14 +2,14 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchProducts } from "../../redux/reducers/ProductsSlice"
 import { AppDispatch, RootState } from "../../redux/store/Store";
-import { Container, Grid, Typography } from "@mui/material";
+import { CircularProgress, Container, Grid, Stack, Typography } from "@mui/material";
 import { styles } from "./ProductsStyles";
 import ProductItem from "./productItem/ProductItem";
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 function Products() {
   const dispatch = useAppDispatch()
-  const { productsList } = useSelector((state: RootState) => state.productsList)
+  const { productsList, status, error } = useSelector((state: RootState) => state.productsList)
 
   useEffect(() => {
     dispatch(fetchProducts())
@@ -19,11 +19,31 @@ function Products() {
     <Container maxWidth={'lg'} sx={styles.productsBox}>
       <Typography variant="h3">Products</Typography>
       <Grid container spacing={3}>
-        {productsList.map(product => (
-          <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
-            <ProductItem eachProduct={product} key={product.id} />
-          </Grid>
-        ))}
+        {status === 'loading' ?
+          <Stack height={'60vh'} width={'100%'} direction={'row'} justifyContent={'center'} alignItems={'center'} color={'#b20d55'}>
+            <CircularProgress color="inherit" />
+          </Stack>
+          : error ?
+            <Stack height={'60vh'} width={'100%'} direction={'row'} justifyContent={'center'} alignItems={'center'} color={'#b20d55'}>
+              <Typography variant="h4">{error}</Typography>
+            </Stack>
+            :
+            <>
+              {productsList.length > 0 ?
+                <>
+                  {productsList.map(product => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                      <ProductItem eachProduct={product} key={product.id} />
+                    </Grid>
+                  ))}
+                </>
+                :
+                <Stack height={'60vh'} width={'100%'} direction={'row'} justifyContent={'center'} alignItems={'center'} color={'#b20d55'}>
+                  <Typography variant="h4">No Data Found</Typography>
+                </Stack>
+              }
+            </>
+        }
       </Grid>
     </Container>
   )
