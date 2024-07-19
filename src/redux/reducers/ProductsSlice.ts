@@ -1,48 +1,24 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
+export type ProductItem = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+  quantity: number | null;
+}
 export interface ProductsListState {
-  productsList: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images: string[];
-    quantity: number | null;
-  }[],
-  cartList: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    quantity: number | null;
-    images: string[];
-  }[],
-  wishList: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    quantity: number | null;
-    images: string[];
-  }[],
+  productsList: ProductItem[],
+  filtersList: ProductItem[],
+  cartList: ProductItem[],
+  wishList: ProductItem[],
   status: string,
   error: string,
   isAdded: boolean;
@@ -52,6 +28,7 @@ export interface ProductsListState {
 
 const initialState: ProductsListState = {
   productsList: [],
+  filtersList: [],
   cartList: [],
   wishList: [],
   status: 'initial',
@@ -116,7 +93,7 @@ export const ProductsSlice = createSlice({
       const filteredList = state.productsList.filter(eachProduct => (
         eachProduct.title.toLowerCase().includes(action.payload.toLowerCase())
       ))
-      state.productsList = filteredList
+      state.filtersList = filteredList
     },
   },
   extraReducers(builder) {
@@ -127,6 +104,7 @@ export const ProductsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.productsList = action?.payload
+        state.filtersList = action?.payload
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.status = 'failed'

@@ -9,7 +9,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 function Products() {
   const dispatch = useAppDispatch()
-  const { productsList, status, error } = useSelector((state: RootState) => state.productsList)
+  const { filtersList, productsList, status, error } = useSelector((state: RootState) => state.productsList)
 
   useEffect(() => {
     dispatch(fetchProducts())
@@ -29,9 +29,9 @@ function Products() {
             </Stack>
             :
             <>
-              {productsList.length > 0 ?
+              {filtersList.length > 0 ?
                 <>
-                  {productsList.map(product => (
+                  {filtersList.map(product => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                       <ProductItem eachProduct={product} key={product.id} />
                     </Grid>

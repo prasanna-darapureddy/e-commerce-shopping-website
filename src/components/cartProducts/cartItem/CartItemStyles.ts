@@ -14,6 +14,14 @@ export const styles = {
         minWidth: '100px',
         maxWidth: '200px',
     },
+    cartBtn: {
+        backgroundColor: '#b20d55',
+        textTransform: 'none',
+        borderRadius: '20px',
+        "&:hover": {
+            backgroundImage: 'linear-gradient(#fe382c, #b20d55)',
+        }
+    },
     contentBox: {
         display: 'flex',
         flexDirection: 'column',

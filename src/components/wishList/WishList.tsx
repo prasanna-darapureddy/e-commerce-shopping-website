@@ -15,7 +15,7 @@ function WishList() {
           <>
             {wishList.map(product => (
               <Grid item xs={12} key={product.id}>
-                <CartItem key={product.id} cartProductDetails={product} />
+                <CartItem key={product.id} cartProductDetails={product} isItCartItem={false}/>
               </Grid>
             ))}
           </> :
